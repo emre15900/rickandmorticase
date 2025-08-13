@@ -7,9 +7,13 @@ import { CharacterFilters } from '@/components/ui/character-filters';
 import { Pagination } from '@/components/ui/pagination';
 import { LoadingSkeleton } from '@/components/ui/loading-skeleton';
 import { Alert, AlertDescription } from '@/components/ui/alert';
-import { AlertCircle, Users } from 'lucide-react';
+import { Button } from '@/components/ui/button';
+import { AlertCircle, Users, Heart } from 'lucide-react';
+import { useFavorites } from '@/hooks/useFavorites';
+import Link from 'next/link';
 
 export default function HomePage() {
+  const { favoritesCount } = useFavorites();
   const [status, setStatus] = useQueryState('status', {
     defaultValue: 'all',
     shallow: false,
@@ -51,6 +55,24 @@ export default function HomePage() {
         <div className="absolute inset-0 bg-gradient-to-br from-green-400/10 via-blue-500/10 to-purple-600/10" />
         <div className="container mx-auto px-4 py-16">
           <header className="text-center mb-12 relative">
+            {/* Favorites Link */}
+            <div className="absolute top-0 right-0">
+              <Link href="/favorites">
+                <Button 
+                  variant="outline" 
+                  className="flex items-center gap-2 bg-white/80 backdrop-blur-sm hover:bg-white/90 border-pink-200 hover:border-pink-300"
+                >
+                  <Heart className="w-4 h-4 text-pink-500" />
+                  <span>Favorilerim</span>
+                  {favoritesCount > 0 && (
+                    <span className="bg-pink-500 text-white text-xs px-2 py-0.5 rounded-full">
+                      {favoritesCount}
+                    </span>
+                  )}
+                </Button>
+              </Link>
+            </div>
+            
             <div className="inline-flex items-center gap-3 px-6 py-2 rounded-full bg-white/80 backdrop-blur-sm border border-white/20 mb-6">
               <div className="w-2 h-2 bg-green-500 rounded-full animate-pulse" />
               <span className="text-sm font-medium text-gray-700">Live from the Multiverse</span>

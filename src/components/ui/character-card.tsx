@@ -5,23 +5,39 @@ import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
 import { Character } from '@/types/character';
 import { useCharacterStore } from '@/store/characterStore';
-import { Heart, MapPin, User } from 'lucide-react';
+import { useFavorites } from '@/hooks/useFavorites';
+import { Heart, MapPin, User, Star } from 'lucide-react';
 import Image from 'next/image';
+import { useRouter } from 'next/navigation';
 
 interface CharacterCardProps {
   character: Character;
 }
 
 export function CharacterCard({ character }: CharacterCardProps) {
+  const router = useRouter();
   const { addCharacter, removeCharacter, isSelected } = useCharacterStore();
+  const { toggleFavorite, isFavorite } = useFavorites();
+  
   const selected = isSelected(character.id);
+  const favorite = isFavorite(character.id);
 
-  const handleToggleSelect = () => {
+  const handleToggleSelect = (e: React.MouseEvent) => {
+    e.stopPropagation();
     if (selected) {
       removeCharacter(character.id);
     } else {
       addCharacter(character);
     }
+  };
+
+  const handleToggleFavorite = (e: React.MouseEvent) => {
+    e.stopPropagation();
+    toggleFavorite(character);
+  };
+
+  const handleCardClick = () => {
+    router.push(`/character/${character.id}`);
   };
 
   const getStatusColor = (status: string) => {
@@ -49,7 +65,10 @@ export function CharacterCard({ character }: CharacterCardProps) {
   };
 
   return (
-    <Card className="overflow-hidden hover:shadow-2xl hover:shadow-blue-500/10 transition-all duration-500 group border-0 bg-white/80 backdrop-blur-sm hover:bg-white hover:scale-[1.02]">
+    <Card 
+      className="overflow-hidden hover:shadow-2xl hover:shadow-blue-500/10 transition-all duration-500 group border-0 bg-white/80 backdrop-blur-sm hover:bg-white hover:scale-[1.02] cursor-pointer"
+      onClick={handleCardClick}
+    >
       <div className="relative">
         <div className="aspect-square overflow-hidden">
           <Image
@@ -73,21 +92,30 @@ export function CharacterCard({ character }: CharacterCardProps) {
 
         {/* Favorite Button */}
         <Button
-          variant={selected ? 'default' : 'outline'}
+          variant={favorite ? 'default' : 'outline'}
           size="sm"
           className={`absolute top-4 right-4 w-10 h-10 rounded-full border-2 transition-all duration-300 ${
-            selected 
+            favorite 
               ? 'bg-red-500 border-red-500 text-white hover:bg-red-600 shadow-lg shadow-red-500/25' 
               : 'bg-white/90 border-white/20 text-gray-600 hover:bg-white hover:text-red-500 backdrop-blur-sm'
           }`}
-          onClick={handleToggleSelect}
+          onClick={handleToggleFavorite}
         >
           <Heart
             className={`w-4 h-4 transition-transform duration-300 ${
-              selected ? 'fill-current scale-110' : 'group-hover:scale-110'
+              favorite ? 'fill-current scale-110' : 'group-hover:scale-110'
             }`}
           />
         </Button>
+
+        {/* Favorite Star Indicator */}
+        {favorite && (
+          <div className="absolute top-16 right-4">
+            <div className="p-1.5 rounded-full bg-yellow-500/90 backdrop-blur-sm animate-pulse">
+              <Star className="w-3 h-3 text-white fill-current" />
+            </div>
+          </div>
+        )}
       </div>
 
       <CardContent className="p-6 space-y-4">
