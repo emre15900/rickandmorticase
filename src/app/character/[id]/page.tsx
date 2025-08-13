@@ -8,10 +8,10 @@ import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
 import { useFavorites } from '@/hooks/useFavorites';
 import { Character } from '@/types/character';
-import { 
-  Heart, 
-  ArrowLeft, 
-  MapPin, 
+import {
+  Heart,
+  ArrowLeft,
+  MapPin,
   Calendar,
   Zap,
   User,
@@ -34,7 +34,7 @@ export default function CharacterDetailPage() {
   const params = useParams();
   const router = useRouter();
   const { toggleFavorite, isFavorite, mounted } = useFavorites();
-  
+
   const [character, setCharacter] = useState<Character | null>(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(false);
@@ -127,18 +127,17 @@ export default function CharacterDetailPage() {
               <ArrowLeft className="w-4 h-4" />
               Back
             </Button>
-            
+
             <Button
               onClick={() => toggleFavorite(character)}
               variant={isCharacterFavorite ? "default" : "outline"}
-              className={`flex items-center gap-2 ${
-                isCharacterFavorite 
-                  ? "bg-gradient-to-r from-pink-500 to-red-500 hover:from-pink-600 hover:to-red-600" 
+              className={`flex items-center gap-2 ${isCharacterFavorite
+                  ? "bg-gradient-to-r from-pink-500 to-red-500 hover:from-pink-600 hover:to-red-600"
                   : "hover:bg-gray-100/80"
-              }`}
+                }`}
             >
-              <Heart 
-                className={`w-4 h-4 ${isCharacterFavorite ? 'fill-current' : ''}`} 
+              <Heart
+                className={`w-4 h-4 ${isCharacterFavorite ? 'fill-current' : ''}`}
               />
               {isCharacterFavorite ? 'Remove from Favorites' : 'Add to Favorites'}
             </Button>
@@ -194,7 +193,7 @@ export default function CharacterDetailPage() {
                     <CardHeader className="pb-3">
                       <CardTitle className="flex items-center gap-2 text-sm">
                         <Zap className="w-4 h-4 text-green-500" />
-                        Durum
+                        Situation
                       </CardTitle>
                     </CardHeader>
                     <CardContent className="pt-0">
@@ -210,7 +209,7 @@ export default function CharacterDetailPage() {
                     <CardHeader className="pb-3">
                       <CardTitle className="flex items-center gap-2 text-sm">
                         <Globe className="w-4 h-4 text-blue-500" />
-                        Tür
+                        Type
                       </CardTitle>
                     </CardHeader>
                     <CardContent className="pt-0">
@@ -226,7 +225,7 @@ export default function CharacterDetailPage() {
                     <CardHeader className="pb-3">
                       <CardTitle className="flex items-center gap-2 text-sm">
                         <User className="w-4 h-4 text-purple-500" />
-                        Cinsiyet
+                        Gender
                       </CardTitle>
                     </CardHeader>
                     <CardContent className="pt-0">
@@ -239,7 +238,7 @@ export default function CharacterDetailPage() {
                     <CardHeader className="pb-3">
                       <CardTitle className="flex items-center gap-2 text-sm">
                         <Calendar className="w-4 h-4 text-orange-500" />
-                        Oluşturma Tarihi
+                        Creation Date
                       </CardTitle>
                     </CardHeader>
                     <CardContent className="pt-0">
@@ -256,7 +255,7 @@ export default function CharacterDetailPage() {
                     <CardHeader className="pb-3">
                       <CardTitle className="flex items-center gap-2">
                         <MapPin className="w-5 h-5 text-red-500" />
-                        Köken
+                        Origin
                       </CardTitle>
                     </CardHeader>
                     <CardContent className="pt-0">
@@ -268,7 +267,7 @@ export default function CharacterDetailPage() {
                     <CardHeader className="pb-3">
                       <CardTitle className="flex items-center gap-2">
                         <MapPin className="w-5 h-5 text-blue-500" />
-                        Son Bilinen Konum
+                        Last Known Location
                       </CardTitle>
                     </CardHeader>
                     <CardContent className="pt-0">
@@ -282,7 +281,7 @@ export default function CharacterDetailPage() {
                   <CardHeader className="pb-3">
                     <CardTitle className="flex items-center gap-2">
                       <Zap className="w-5 h-5 text-yellow-500" />
-                      Bölümler
+                      Episodes
                     </CardTitle>
                   </CardHeader>
                   <CardContent className="pt-0">
@@ -290,7 +289,7 @@ export default function CharacterDetailPage() {
                       <span className="text-2xl font-bold text-yellow-600">
                         {character.episode.length}
                       </span>
-                      <span className="text-gray-600">bölümde görüldü</span>
+                      <span className="text-gray-600">seen in the episode</span>
                     </div>
                   </CardContent>
                 </Card>
