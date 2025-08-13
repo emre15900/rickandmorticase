@@ -33,42 +33,53 @@ export function CharacterFilters({
   const hasActiveFilters = status !== 'all' || gender !== 'all';
 
   return (
-    <Card className="mb-6">
-      <CardHeader>
-        <CardTitle className="flex items-center gap-2">
-          <Filter className="w-5 h-5" />
-          Filters
+    <Card className="mb-12 border-0 bg-white/60 backdrop-blur-xl shadow-xl shadow-blue-500/5">
+      <CardHeader className="pb-6">
+        <CardTitle className="flex items-center gap-3 text-2xl">
+          <div className="p-2 rounded-xl bg-gradient-to-r from-purple-500 to-pink-500 text-white">
+            <Filter className="w-6 h-6" />
+          </div>
+          <span className="bg-gradient-to-r from-purple-600 to-pink-600 bg-clip-text text-transparent">
+            Smart Filters
+          </span>
         </CardTitle>
+        <p className="text-gray-600 mt-2">Filter characters by their attributes to find exactly who you're looking for</p>
       </CardHeader>
-      <CardContent className="space-y-4">
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
-          <div className="space-y-2">
-            <label className="text-sm font-medium">Status</label>
+      <CardContent className="space-y-6">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+          <div className="space-y-3">
+            <label className="text-sm font-semibold text-gray-700 flex items-center gap-2">
+              <div className="w-2 h-2 rounded-full bg-green-500" />
+              Life Status
+            </label>
             <Select value={status} onValueChange={onStatusChange}>
-              <SelectTrigger>
+              <SelectTrigger className="border-2 border-gray-200 hover:border-green-400 focus:border-green-500 transition-colors bg-white/80">
                 <SelectValue placeholder="All Status" />
               </SelectTrigger>
               <SelectContent>
-                <SelectItem value="all">All Status</SelectItem>
-                <SelectItem value="alive">Alive</SelectItem>
-                <SelectItem value="dead">Dead</SelectItem>
-                <SelectItem value="unknown">Unknown</SelectItem>
+                <SelectItem value="all">🌍 All Status</SelectItem>
+                <SelectItem value="alive">💚 Alive</SelectItem>
+                <SelectItem value="dead">💀 Dead</SelectItem>
+                <SelectItem value="unknown">❓ Unknown</SelectItem>
               </SelectContent>
             </Select>
           </div>
 
-          <div className="space-y-2">
-            <label className="text-sm font-medium">Gender</label>
+          <div className="space-y-3">
+            <label className="text-sm font-semibold text-gray-700 flex items-center gap-2">
+              <div className="w-2 h-2 rounded-full bg-blue-500" />
+              Gender Identity
+            </label>
             <Select value={gender} onValueChange={onGenderChange}>
-              <SelectTrigger>
+              <SelectTrigger className="border-2 border-gray-200 hover:border-blue-400 focus:border-blue-500 transition-colors bg-white/80">
                 <SelectValue placeholder="All Genders" />
               </SelectTrigger>
               <SelectContent>
-                <SelectItem value="all">All Genders</SelectItem>
-                <SelectItem value="male">Male</SelectItem>
-                <SelectItem value="female">Female</SelectItem>
-                <SelectItem value="genderless">Genderless</SelectItem>
-                <SelectItem value="unknown">Unknown</SelectItem>
+                <SelectItem value="all">👥 All Genders</SelectItem>
+                <SelectItem value="male">👨 Male</SelectItem>
+                <SelectItem value="female">👩 Female</SelectItem>
+                <SelectItem value="genderless">⚪ Genderless</SelectItem>
+                <SelectItem value="unknown">❓ Unknown</SelectItem>
               </SelectContent>
             </Select>
           </div>
@@ -78,7 +89,7 @@ export function CharacterFilters({
               <Button
                 variant="outline"
                 onClick={onClearFilters}
-                className="w-full"
+                className="w-full h-11 border-2 border-red-200 hover:border-red-400 hover:bg-red-50 text-red-600 hover:text-red-700 transition-all duration-300"
               >
                 <X className="w-4 h-4 mr-2" />
                 Clear Filters
@@ -91,9 +102,13 @@ export function CharacterFilters({
               <Button
                 variant="outline"
                 onClick={clearSelected}
-                className="w-full"
+                className="w-full h-11 border-2 border-purple-200 hover:border-purple-400 hover:bg-purple-50 text-purple-600 hover:text-purple-700 transition-all duration-300 relative overflow-hidden group"
               >
-                Clear Selected ({selectedCharacters.length})
+                <div className="absolute inset-0 bg-gradient-to-r from-purple-500/10 to-pink-500/10 translate-x-[-100%] group-hover:translate-x-0 transition-transform duration-300" />
+                <div className="relative flex items-center">
+                  <X className="w-4 h-4 mr-2" />
+                  Clear Selected ({selectedCharacters.length})
+                </div>
               </Button>
             )}
           </div>

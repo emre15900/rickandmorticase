@@ -45,18 +45,31 @@ export default function HomePage() {
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-green-50 to-blue-50">
-      <div className="container mx-auto px-4 py-8">
-        <header className="text-center mb-8">
-          <h1 className="text-4xl font-bold text-gray-900 mb-2">
-            Rick and Morty Characters
-          </h1>
-          <p className="text-gray-600 max-w-2xl mx-auto">
-            Explore the multiverse and discover your favorite characters from
-            the Rick and Morty universe. Filter by status and gender to find
-            exactly who you&apos;re looking for.
-          </p>
-        </header>
+    <div className="min-h-screen bg-gradient-to-br from-slate-50 via-blue-50 to-purple-50">
+      {/* Hero Section */}
+      <div className="relative overflow-hidden">
+        <div className="absolute inset-0 bg-gradient-to-br from-green-400/10 via-blue-500/10 to-purple-600/10" />
+        <div className="container mx-auto px-4 py-16">
+          <header className="text-center mb-12 relative">
+            <div className="inline-flex items-center gap-3 px-6 py-2 rounded-full bg-white/80 backdrop-blur-sm border border-white/20 mb-6">
+              <div className="w-2 h-2 bg-green-500 rounded-full animate-pulse" />
+              <span className="text-sm font-medium text-gray-700">Live from the Multiverse</span>
+            </div>
+            <h1 className="text-6xl md:text-7xl font-bold bg-gradient-to-r from-green-600 via-blue-600 to-purple-600 bg-clip-text text-transparent mb-6 leading-tight">
+              Rick & Morty
+              <br />
+              <span className="text-4xl md:text-5xl font-semibold">Character Explorer</span>
+            </h1>
+            <p className="text-xl text-gray-600 max-w-3xl mx-auto leading-relaxed">
+              Dive deep into the infinite multiverse and discover every character from the Rick and Morty universe. 
+              <br className="hidden md:block" />
+              Filter, explore, and collect your favorites from across all dimensions.
+            </p>
+          </header>
+        </div>
+      </div>
+
+      <div className="container mx-auto px-4 pb-16">
 
         <CharacterFilters
           status={status}
@@ -79,17 +92,39 @@ export default function HomePage() {
 
         {data && (
           <>
-            <div className="flex items-center gap-2 mb-6">
-              <Users className="w-5 h-5 text-gray-600" />
-              <span className="text-gray-600">
-                Showing {data.results.length} of {data.info.count} characters
-                {page > 1 && ` (Page ${page} of ${data.info.pages})`}
-              </span>
+            <div className="flex items-center justify-between mb-8">
+              <div className="flex items-center gap-3">
+                <div className="p-2 rounded-xl bg-gradient-to-r from-green-500 to-blue-500 text-white">
+                  <Users className="w-5 h-5" />
+                </div>
+                <div>
+                  <p className="text-sm text-gray-500 font-medium">Characters Found</p>
+                  <p className="text-2xl font-bold text-gray-900">
+                    {data.results.length} <span className="text-base font-normal text-gray-500">of {data.info.count}</span>
+                  </p>
+                </div>
+              </div>
+              {page > 1 && (
+                <div className="px-4 py-2 bg-white/80 backdrop-blur-sm rounded-full border border-gray-200">
+                  <span className="text-sm font-medium text-gray-600">
+                    Page {page} of {data.info.pages}
+                  </span>
+                </div>
+              )}
             </div>
 
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
-              {data.results.map((character) => (
-                <CharacterCard key={character.id} character={character} />
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-8">
+              {data.results.map((character, index) => (
+                <div
+                  key={character.id}
+                  className="animate-fade-in"
+                  style={{
+                    animationDelay: `${index * 50}ms`,
+                    animationFillMode: 'both'
+                  }}
+                >
+                  <CharacterCard character={character} />
+                </div>
               ))}
             </div>
 
