@@ -8,12 +8,10 @@ import { Pagination } from '@/components/ui/pagination';
 import { LoadingSkeleton } from '@/components/ui/loading-skeleton';
 import { Alert, AlertDescription } from '@/components/ui/alert';
 import { Button } from '@/components/ui/button';
-import { AlertCircle, Users, Heart } from 'lucide-react';
-import { useFavorites } from '@/hooks/useFavorites';
-import Link from 'next/link';
+import { AlertCircle, Users } from 'lucide-react';
+import { FavoritesButton } from '@/components/ui/favorites-button';
 
 export default function HomePage() {
-  const { favoritesCount, mounted } = useFavorites();
   const [status, setStatus] = useQueryState('status', {
     defaultValue: 'all',
     shallow: false,
@@ -57,20 +55,7 @@ export default function HomePage() {
           <header className="text-center mb-12 relative">
             {/* Favorites Link */}
             <div className="absolute top-0 right-0">
-              <Link href="/favorites">
-                <Button 
-                  variant="outline" 
-                  className="flex items-center gap-2 bg-white/80 backdrop-blur-sm hover:bg-white/90 border-pink-200 hover:border-pink-300"
-                >
-                  <Heart className="w-4 h-4 text-pink-500" />
-                  <span>My Favorites</span>
-                  {mounted && favoritesCount > 0 && (
-                    <span className="bg-pink-500 text-white text-xs px-2 py-0.5 rounded-full">
-                      {favoritesCount}
-                    </span>
-                  )}
-                </Button>
-              </Link>
+              <FavoritesButton />
             </div>
             
             <div className="inline-flex items-center gap-3 px-6 py-2 rounded-full bg-white/80 backdrop-blur-sm border border-white/20 mb-6">
