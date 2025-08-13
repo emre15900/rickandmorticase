@@ -51,25 +51,30 @@ export default function HomePage() {
       {/* Hero Section */}
       <div className="relative overflow-hidden">
         <div className="absolute inset-0 bg-gradient-to-br from-green-400/10 via-blue-500/10 to-purple-600/10" />
-        <div className="container mx-auto px-4 py-16">
-          <header className="text-center mb-12 relative">
-            {/* Favorites Link */}
-            <div className="absolute top-0 right-0">
+        <div className="container mx-auto px-4 py-8 sm:py-12 md:py-16">
+          <header className="text-center mb-8 sm:mb-12 relative">
+            {/* Favorites Link - Mobile responsive */}
+            <div className="absolute top-0 right-0 -mt-2 sm:mt-0">
               <FavoritesButton />
             </div>
             
-            <div className="inline-flex items-center gap-3 px-6 py-2 rounded-full bg-white/80 backdrop-blur-sm border border-white/20 mb-6">
+            {/* Status badge - responsive */}
+            <div className="inline-flex items-center gap-2 sm:gap-3 px-4 sm:px-6 py-2 rounded-full bg-white/80 backdrop-blur-sm border border-white/20 mb-4 sm:mb-6">
               <div className="w-2 h-2 bg-green-500 rounded-full animate-pulse" />
-              <span className="text-sm font-medium text-gray-700">Live from the Multiverse</span>
+              <span className="text-xs sm:text-sm font-medium text-gray-700">Live from the Multiverse</span>
             </div>
-            <h1 className="text-6xl md:text-7xl font-bold bg-gradient-to-r from-green-600 via-blue-600 to-purple-600 bg-clip-text text-transparent mb-6 leading-tight">
+            
+            {/* Main title - responsive */}
+            <h1 className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-bold bg-gradient-to-r from-green-600 via-blue-600 to-purple-600 bg-clip-text text-transparent mb-4 sm:mb-6 leading-tight px-2">
               Rick & Morty
               <br />
-              <span className="text-4xl md:text-5xl font-semibold">Character Explorer</span>
+              <span className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-semibold">Character Explorer</span>
             </h1>
-            <p className="text-xl text-gray-600 max-w-3xl mx-auto leading-relaxed">
+            
+            {/* Description - responsive */}
+            <p className="text-base sm:text-lg md:text-xl text-gray-600 max-w-3xl mx-auto leading-relaxed px-4">
               Dive deep into the infinite multiverse and discover every character from the Rick and Morty universe. 
-              <br className="hidden md:block" />
+              <br className="hidden sm:block" />
               Filter, explore, and collect your favorites from across all dimensions.
             </p>
           </header>
@@ -120,7 +125,7 @@ export default function HomePage() {
               )}
             </div>
 
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-8">
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4 sm:gap-6 md:gap-8">
               {data.results.map((character, index) => (
                 <div
                   key={character.id}

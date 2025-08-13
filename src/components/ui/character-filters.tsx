@@ -45,8 +45,8 @@ export function CharacterFilters({
         </CardTitle>
         <p className="text-gray-600 mt-2">Filter characters by their attributes to find exactly who you're looking for</p>
       </CardHeader>
-      <CardContent className="space-y-6">
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+      <CardContent className="space-y-4 sm:space-y-6">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-6">
           <div className="space-y-3">
             <label className="text-sm font-semibold text-gray-700 flex items-center gap-2">
               <div className="w-2 h-2 rounded-full bg-green-500" />
