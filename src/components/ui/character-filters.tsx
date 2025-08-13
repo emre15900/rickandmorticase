@@ -30,7 +30,7 @@ export function CharacterFilters({
 }: CharacterFiltersProps) {
   const { selectedCharacters, clearSelected } = useCharacterStore();
 
-  const hasActiveFilters = status !== '' || gender !== '';
+  const hasActiveFilters = status !== 'all' || gender !== 'all';
 
   return (
     <Card className="mb-6">
@@ -49,7 +49,7 @@ export function CharacterFilters({
                 <SelectValue placeholder="All Status" />
               </SelectTrigger>
               <SelectContent>
-                <SelectItem value="">All Status</SelectItem>
+                <SelectItem value="all">All Status</SelectItem>
                 <SelectItem value="alive">Alive</SelectItem>
                 <SelectItem value="dead">Dead</SelectItem>
                 <SelectItem value="unknown">Unknown</SelectItem>
@@ -64,7 +64,7 @@ export function CharacterFilters({
                 <SelectValue placeholder="All Genders" />
               </SelectTrigger>
               <SelectContent>
-                <SelectItem value="">All Genders</SelectItem>
+                <SelectItem value="all">All Genders</SelectItem>
                 <SelectItem value="male">Male</SelectItem>
                 <SelectItem value="female">Female</SelectItem>
                 <SelectItem value="genderless">Genderless</SelectItem>

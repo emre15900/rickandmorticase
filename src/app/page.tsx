@@ -11,11 +11,11 @@ import { AlertCircle, Users } from 'lucide-react';
 
 export default function HomePage() {
   const [status, setStatus] = useQueryState('status', {
-    defaultValue: '',
+    defaultValue: 'all',
     shallow: false,
   });
   const [gender, setGender] = useQueryState('gender', {
-    defaultValue: '',
+    defaultValue: 'all',
     shallow: false,
   });
   const [page, setPage] = useQueryState('page', {
@@ -26,16 +26,16 @@ export default function HomePage() {
   });
 
   const filters = {
-    status: status || undefined,
-    gender: gender || undefined,
+    status: status === 'all' ? undefined : status,
+    gender: gender === 'all' ? undefined : gender,
     page,
   };
 
   const { data, isLoading, error } = useCharacters(filters);
 
   const handleClearFilters = () => {
-    setStatus('');
-    setGender('');
+    setStatus('all');
+    setGender('all');
     setPage(1);
   };
 
