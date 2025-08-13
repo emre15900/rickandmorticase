@@ -8,28 +8,34 @@ const FAVORITES_KEY = 'rickAndMortyFavorites';
 
 export function useFavorites() {
   const [favorites, setFavorites] = useState<Character[]>([]);
+  const [mounted, setMounted] = useState(false);
   const { toast } = useToast();
 
   // Load favorites from localStorage on mount
   useEffect(() => {
-    try {
-      const stored = localStorage.getItem(FAVORITES_KEY);
-      if (stored) {
-        setFavorites(JSON.parse(stored));
+    setMounted(true);
+    if (typeof window !== 'undefined') {
+      try {
+        const stored = localStorage.getItem(FAVORITES_KEY);
+        if (stored) {
+          setFavorites(JSON.parse(stored));
+        }
+      } catch (error) {
+        console.error('Error loading favorites:', error);
       }
-    } catch (error) {
-      console.error('Error loading favorites:', error);
     }
   }, []);
 
   // Save favorites to localStorage whenever favorites change
   useEffect(() => {
-    try {
-      localStorage.setItem(FAVORITES_KEY, JSON.stringify(favorites));
-    } catch (error) {
-      console.error('Error saving favorites:', error);
+    if (mounted && typeof window !== 'undefined') {
+      try {
+        localStorage.setItem(FAVORITES_KEY, JSON.stringify(favorites));
+      } catch (error) {
+        console.error('Error saving favorites:', error);
+      }
     }
-  }, [favorites]);
+  }, [favorites, mounted]);
 
   const addToFavorites = (character: Character) => {
     setFavorites(prev => {
@@ -38,10 +44,13 @@ export function useFavorites() {
         return prev;
       }
       
-      toast.success(
-        "✨ Favorilere Eklendi!",
-        `${character.name} favorilerinize eklendi.`
-      );
+      // Schedule toast for next tick to avoid render during render
+      setTimeout(() => {
+        toast.success(
+          "✨ Added to Favorites!",
+          `${character.name} has been added to your favorites.`
+        );
+      }, 0);
       
       return [...prev, character];
     });
@@ -52,10 +61,13 @@ export function useFavorites() {
       const character = prev.find(fav => fav.id === characterId);
       
       if (character) {
-        toast.default(
-          "💔 Favorilerden Çıkarıldı",
-          `${character.name} favorilerinizden çıkarıldı.`
-        );
+        // Schedule toast for next tick to avoid render during render
+        setTimeout(() => {
+          toast.default(
+            "💔 Removed from Favorites",
+            `${character.name} has been removed from your favorites.`
+          );
+        }, 0);
       }
       
       return prev.filter(fav => fav.id !== characterId);
@@ -78,19 +90,23 @@ export function useFavorites() {
 
   const clearAllFavorites = () => {
     setFavorites([]);
-    toast.default(
-      "🗑️ Tüm Favoriler Temizlendi",
-      "Tüm favorileriniz başarıyla silindi."
-    );
+    // Schedule toast for next tick to avoid render during render
+    setTimeout(() => {
+      toast.default(
+        "🗑️ All Favorites Cleared",
+        "All your favorites have been successfully removed."
+      );
+    }, 0);
   };
 
   return {
-    favorites,
+    favorites: mounted ? favorites : [],
     addToFavorites,
     removeFromFavorites,
     toggleFavorite,
     isFavorite,
     clearAllFavorites,
-    favoritesCount: favorites.length,
+    favoritesCount: mounted ? favorites.length : 0,
+    mounted,
   };
 }

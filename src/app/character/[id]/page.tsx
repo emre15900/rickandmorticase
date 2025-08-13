@@ -33,7 +33,7 @@ async function getCharacter(id: string): Promise<Character | null> {
 export default function CharacterDetailPage() {
   const params = useParams();
   const router = useRouter();
-  const { toggleFavorite, isFavorite } = useFavorites();
+  const { toggleFavorite, isFavorite, mounted } = useFavorites();
   
   const [character, setCharacter] = useState<Character | null>(null);
   const [loading, setLoading] = useState(true);
@@ -111,7 +111,7 @@ export default function CharacterDetailPage() {
     }
   };
 
-  const isCharacterFavorite = isFavorite(character.id);
+  const isCharacterFavorite = mounted ? isFavorite(character.id) : false;
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-slate-50 via-blue-50 to-purple-50">
@@ -125,7 +125,7 @@ export default function CharacterDetailPage() {
               className="flex items-center gap-2 hover:bg-gray-100/80"
             >
               <ArrowLeft className="w-4 h-4" />
-              Geri Dön
+              Back
             </Button>
             
             <Button
@@ -140,7 +140,7 @@ export default function CharacterDetailPage() {
               <Heart 
                 className={`w-4 h-4 ${isCharacterFavorite ? 'fill-current' : ''}`} 
               />
-              {isCharacterFavorite ? 'Favorilerden Çıkar' : 'Favorilere Ekle'}
+              {isCharacterFavorite ? 'Remove from Favorites' : 'Add to Favorites'}
             </Button>
           </div>
         </div>

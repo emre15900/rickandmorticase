@@ -17,10 +17,10 @@ interface CharacterCardProps {
 export function CharacterCard({ character }: CharacterCardProps) {
   const router = useRouter();
   const { addCharacter, removeCharacter, isSelected } = useCharacterStore();
-  const { toggleFavorite, isFavorite } = useFavorites();
+  const { toggleFavorite, isFavorite, mounted } = useFavorites();
   
   const selected = isSelected(character.id);
-  const favorite = isFavorite(character.id);
+  const favorite = mounted ? isFavorite(character.id) : false;
 
   const handleToggleSelect = (e: React.MouseEvent) => {
     e.stopPropagation();

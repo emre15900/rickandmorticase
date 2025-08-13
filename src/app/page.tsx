@@ -13,7 +13,7 @@ import { useFavorites } from '@/hooks/useFavorites';
 import Link from 'next/link';
 
 export default function HomePage() {
-  const { favoritesCount } = useFavorites();
+  const { favoritesCount, mounted } = useFavorites();
   const [status, setStatus] = useQueryState('status', {
     defaultValue: 'all',
     shallow: false,
@@ -63,8 +63,8 @@ export default function HomePage() {
                   className="flex items-center gap-2 bg-white/80 backdrop-blur-sm hover:bg-white/90 border-pink-200 hover:border-pink-300"
                 >
                   <Heart className="w-4 h-4 text-pink-500" />
-                  <span>Favorilerim</span>
-                  {favoritesCount > 0 && (
+                  <span>My Favorites</span>
+                  {mounted && favoritesCount > 0 && (
                     <span className="bg-pink-500 text-white text-xs px-2 py-0.5 rounded-full">
                       {favoritesCount}
                     </span>
